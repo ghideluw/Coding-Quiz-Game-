@@ -18,7 +18,7 @@ This application will require access to the link to the deployed application <in
 of the game.. You can click continue to proceed to the game or exit to return to the START page. To progress through the quiz, read the questions, select an answer, and 
 click the next button. Once you reach the end of the quiz, a window pops up to store your initials and register your score. You are able to save and view your score amongst 
 other recent users. Click quit at the end to reutrn to the beginning START page.
-  
+##SCREENSHOT![image](https://user-images.githubusercontent.com/111549689/211069788-a4df447b-82f6-4ab2-bd21-e461ba4d36e6.png)
 
    
 
