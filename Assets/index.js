@@ -50,6 +50,7 @@ const next_btn = document.querySelector(".next_btn");
 const result_box = document.querySelector(".result_box");
 const restart_quiz = document.querySelector(".restart");
 const quit_quiz = document.querySelector(".quit");
+let correctanswer = 0;
 
 //add click event for next button//
 next_btn.addEventListener('click', () => {
@@ -84,19 +85,31 @@ continue_btn.addEventListener('click', function (event) {
 
 //getting questions and options from array//
 function showQuestions(index) {
+    document.querySelector(".que_text").innerHTML = ""
     const que_text = document.querySelector(".que_text");
 
     console.log(questions);
     let que_tag = '<span>' + questions[index].numb + ". " + questions[index].question + '</span>';
-    let option_tag = '<div class="option">' + questions[index].options[0] + '<span></span></div>'
-        + '<div class="option">' + questions[index].options[1] + '<span></span></div>'
-        + '<div class="option">' + questions[index].options[2] + '<span></span></div>'
-        + '<div class="option">' + questions[index].options[3] + ' <span></span></div>';
+    let option_tag = '<div class="option">' + questions[index].options[0] + '</div>'
+        + '<div class="option">' + questions[index].options[1] + '</div>'
+        + '<div class="option">' + questions[index].options[2] + '</div>'
+        + '<div class="option">' + questions[index].options[3] + '</div>';
     que_text.innerHTML = que_tag;
     options_list.innerHTML = option_tag;
     const option = options_list.querySelectorAll(".option");
-    for (let i = 0; i < options_list.length; i++) {
-        option[i].setAttribute("onclick", "optionSelected(this)");
+    console.log(options_list);
+    for (let i = 0; i < questions[index].options.length; i++) {
+        console.log(option[i]);
+        option[i].addEventListener("click", function (event) {
+            event.preventDefault();
+            console.log(event.target.innerHTML);
+            if (event.target.innerHTML === questions[index].answer) {
+
+                correctanswer++;
+            } else {
+                timeValue--;
+            }
+        })
 
     }
 }
@@ -197,7 +210,7 @@ function showResultBox() {
     let saveScoreBtn = document.querySelector('#savescore')
     let finalQuitBtn = document.querySelector('#finalQuit')
     let clear = document.querySelector("#clear");
-    document.getElementById("final_score").innerHTML = score;
+    document.getElementById("final_score").innerHTML = correctanswer;
     document.getElementById("total_questions").innerHTML = questions.length
 
     finalQuitBtn.addEventListener('click', function (event) {
@@ -231,7 +244,7 @@ function showResultBox() {
         console.log(submitInitalsBtn);
         let finaObj = {
             name: submitInitalsBtn.value,
-            score: score
+            score: correctanswer
         }
         let localStorageData = JSON.parse(localStorage.getItem('quiz_score'))
         if (localStorageData != null) {
@@ -265,7 +278,14 @@ function showFinalPage() {
         tr.appendChild(th1, th2)
         tableEl.append(tr)
         console.log(tableEl);
-        for (let i = 0; i < 5; i++) {
+        let tablesize;
+        if (localStorageScore.length > 5) {
+            tablesize = 5
+
+        } else {
+            tablesize = localStorageScore.length;
+        }
+        for (let i = 0; i < tablesize; i++) {
             let tr = document.createElement('tr')
             let name_td = document.createElement('td')
             name_td.innerHTML = localStorageScore[i].name
