@@ -1,4 +1,4 @@
-
+//set up variables for use in the file
 const strtbtn = document.querySelector(".strtbtn button");
 const strtdiv = document.querySelector(".strtbtn");
 const resultBox = document.querySelector(".result_box");
@@ -10,7 +10,7 @@ const options_list = document.querySelector(".option_list");
 const timeCount = quiz_box.querySelector(".timer_sec");
 const timeLine = quiz_box.querySelector(".timer_line");
 
-
+//set up question count variable and timer variable
 
 let que_count = 0;
 let que_numb = 1;
@@ -26,11 +26,11 @@ strtbtn.onclick = () => {
 /* Add click event for exit quiz button */
 
 exit_btn.addEventListener('click', () => {
-    document.getElementById("buttons").style.display = "none"
+    document.getElementById("buttons").style.display = "none";
     que_numb = 1;
-    document.getElementById('quiz_box').style.display = "block"
+    document.getElementById('quiz_box').style.display = "block";
 
-    // document.classList.remove("activeInfo"); //hide info box
+
 })
 
 /* Add click event for continue quiz button */
@@ -70,13 +70,6 @@ next_btn.addEventListener('click', () => {
     }
 
 })
-//     exit_btn.addEventListener('click', function(event){
-//     console.log("quitquizbtn")
-// event.preventDefault()
-// resultBox.style.display = "none";
-// strtdiv.style.display = "block";
-
-// })
 
 continue_btn.addEventListener('click', function (event) {
 
@@ -114,8 +107,6 @@ function showQuestions(index) {
     }
 }
 
-let tickIcon = '<div class= "icon tick"><i class="fas fa-check"></i></div>';
-let crossIcon = '<div class= "icon cross"><i class="fas fa-times"></i></div>';
 var score = 0;
 var questionIndex = 0;
 
@@ -127,7 +118,7 @@ function render(questionIndex) {
     // Clears existing data 
     que_text.innerHTML = "";
     ulCreate.innerHTML = "";
-    // For loops to loop through all info in array
+    // For loops to loop through all info in questions array
     for (var i = 0; i < questions.length; i++) {
         // Appends question title only
         var userQuestion = questions[questionIndex].question;
@@ -167,43 +158,8 @@ function compare(event) {
     }
 }
 
-// TODO Check optionSelected function not working..?
-
-// function optionSelected(answer) {
-//     clearInterval(counter);
-//     clearInterval(counterLine);
-//     let userAns = answer.textContent;
-//     let correctAns = questions[que_count].answer;
-//     let allOptions = option_list.children.length;
-//     if (userAns == correctAns) {
-//         answer.classList.add("correct");
-//         console.log("Answer is Correct");
-//         answer.insertAdjacentHTML("beforeend", tickIcon)
-//     } else {
-//         answer.classList.add("incorrect");
-//         console.log("Answer is Wrong");
-//         answer.insertAdjacentHTML("beforeend", crossIcon)
-//     }
-
-//     //if answer is incorrect then automatically select the correct answer//
-
-//     for (i = 0; i < allOptions; i++) {
-//         if (options_list.children[i].textContent == correctAns) {
-//             option_list.children[i].setAttribute("class", "option correct");
-//             option_list.children[i].insertAdjacentHTML("beforeend", tickIcon)
-//         }
-//     }
-
-
-
-//     //once user selected disable all options
-//     for (let i = 0; i < alloptions; i++) {
-//         option_list.children[i].classList.add("disabled");
-//     }
-//     next_btn.style.display = "block";
-// }
 function showResultBox() {
-    // info_box.classList.remove("activeInfo"); //hide the info box
+
     quiz_box.classList.remove("activeQuiz"); //hide the quiz box
     result_box.classList.add("activeResult"); //show the result box
     let quitbtn = document.querySelector("#quit");
@@ -212,7 +168,7 @@ function showResultBox() {
     let clear = document.querySelector("#clear");
     document.getElementById("final_score").innerHTML = correctanswer;
     document.getElementById("total_questions").innerHTML = questions.length
-
+//add event listener to final quit button 
     finalQuitBtn.addEventListener('click', function (event) {
         console.log("quitquizbtn");
         event.preventDefault();
@@ -224,8 +180,8 @@ function showResultBox() {
     })
 
 
-    console.log(quitbtn);
-
+    
+//add event listener to quit quiz button 
     quitbtn.addEventListener('click', function (event) {
         console.log("quitquizbtn");
         event.preventDefault();
@@ -236,12 +192,12 @@ function showResultBox() {
 
 
     })
-
+//add event listener to the save score button 
     saveScoreBtn.addEventListener('click', function (event) {
         event.preventDefault();
-
+//store initials/ name in local storage
         let submitInitalsBtn = document.querySelector("#submit_initials");
-        console.log(submitInitalsBtn);
+       
         let finaObj = {
             name: submitInitalsBtn.value,
             score: correctanswer
@@ -253,10 +209,10 @@ function showResultBox() {
             localStorageData = []
             localStorageData.push(finaObj)
         }
-
+//access quiz score from local storage
         localStorage.setItem('quiz_score', JSON.stringify(localStorageData))
 
-
+//call function to display final result
         showFinalPage()
     })
 }
@@ -266,6 +222,8 @@ function showFinalPage() {
     document.getElementById('finalPage').style.display = "block"
 
     let localStorageScore = JSON.parse(localStorage.getItem('quiz_score'))
+
+//display data from local storage including name and score
 
     if (localStorageScore != null) {
         localStorageScore.reverse();
@@ -301,8 +259,8 @@ function showFinalPage() {
     }
 }
 
-// *****go to start button page ********
 
+//function to set the timer for the quiz and reset every question
 
 function startTimer(time) {
     counter = setInterval(timer, 1000);
@@ -335,7 +293,7 @@ function startTimerLine(time) {
 }
 
 
-
+//function to display the current question number 
 function queCounter(index) {
     const bottom_ques_counter = quiz_box.querySelector(".total_que");
     let totalQuesCountTag = '<span><p>' + que_count + '</p>of<p>' + questions.length + '</p>Questions</span>';
@@ -343,26 +301,3 @@ function queCounter(index) {
 }
 
 
-function renderGames() {
-    for (var i = 0; i < games.length; i++) {
-        console.log(games[i]);
-        var highScore = document.createElement("li");
-        highScore.textContent = games[i].initials + " " + games[i].score;
-        highscores.append(highScore);
-    }
-    console.log(games.length);
-
-}
-
-function storeGames() {
-    console.log(games);
-    localStorage.setItem("games", JSON.stringify(games));
-}
-function init() {
-    var storeGames = JSON.parse(localStorage.getItem("games"));
-    if (storeGames !== null) {
-        games = storeGames;
-    }
-}
-
-init();

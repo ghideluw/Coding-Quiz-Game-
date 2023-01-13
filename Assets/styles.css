@@ -428,8 +428,8 @@ footer .next_btn:hover {
 
 #resultTable {
    background: #fff;
-    width: 450px;
-    padding: 25px 30px;
+    width: 275px;
+    padding: 10px 10px;
     border-radius: 5px;
     border: 1px solid #007bff;
     display: flex;
@@ -437,9 +437,7 @@ footer .next_btn:hover {
     align-items: center;
    
 }
-/* Style the table */
-/* Style the finalPage elements like title and button */
-/* Replicate the functionality of exit page into the final page exit button */
+
 
 #finalQuit {
      margin: 0 10px;
